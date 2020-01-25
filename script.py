@@ -24,66 +24,71 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 my_path = os.getcwd()       # Path of current working directory
-Sample_size = 20
-array = np.arange(Sample_size)
+Samplesize = [20,30,40,50]
 
                         # Creating trainig image set
 
-i=0
 UpImageNo = 1
 DownImageNo = 1
 
-while i+Sample_size <= len(X_train[:,0]):
-    plt.figure()
-    #Remove the visibility of axes
-    cur_axes = plt.gca()
-    cur_axes.axes.get_xaxis().set_visible(False)
-    cur_axes.axes.get_yaxis().set_visible(False)
-    fig1 = plt.gcf()
-    fig1.patch.set_visible(False)       #Remove the visibility of frame in the graph
-    print(i)
-    if Y_train[i:i+Sample_size,0].sum() >=0:
-        my_file = 'UpGraph'+str(UpImageNo)+'.png'
-        plt.plot(array,X_train[i:i+Sample_size,0])
-        plt.plot(array,X_train[i:i+Sample_size,3])
-        fig1.savefig(os.path.join(my_path,'Dataset/Training/Up/'+my_file), transparent= True)
-        UpImageNo = UpImageNo+1
-    else:
-        my_file = 'DownGraph'+str(DownImageNo)+'.png'
-        plt.plot(array,X_train[i:i+Sample_size,0])
-        plt.plot(array,X_train[i:i+Sample_size,3])
-        fig1.savefig(os.path.join(my_path, 'Dataset/Training/Down/'+my_file), transparent= True)
-        DownImageNo = DownImageNo+1
-    i=i+Sample_size
+for Sample_size in Samplesize:
+    i=0
+    array = np.arange(Sample_size)
+    while (2*Sample_size)+i <= len(Y_train[:,0]):
+        plt.figure()
+        #Remove the visibility of axes
+        cur_axes = plt.gca()
+        cur_axes.axes.get_xaxis().set_visible(False)
+        cur_axes.axes.get_yaxis().set_visible(False)
+        fig1 = plt.gcf()
+        fig1.patch.set_visible(False)       #Remove the visibility of frame in the graph
+        print(i)
+        print(Sample_size)
+        if Y_train[i+Sample_size:(2*Sample_size)+i,0].sum() >=0:
+            my_file = 'UpGraph'+str(UpImageNo)+'.png'
+            plt.plot(array,X_train[i:i+Sample_size,0])
+            plt.plot(array,X_train[i:i+Sample_size,3])
+            fig1.savefig(os.path.join(my_path,'Dataset/Training/Up/'+my_file), transparent= True)
+            UpImageNo = UpImageNo+1
+        else:
+            my_file = 'DownGraph'+str(DownImageNo)+'.png'
+            plt.plot(array,X_train[i:i+Sample_size,0])
+            plt.plot(array,X_train[i:i+Sample_size,3])
+            fig1.savefig(os.path.join(my_path, 'Dataset/Training/Down/'+my_file), transparent= True)
+            DownImageNo = DownImageNo+1
+        i=i+Sample_size
 
                         # Creating test image set
 
-i=0
 UpImageNo = 1
 DownImageNo = 1
 
-while i+Sample_size <= len(X_test[:,0]):
-    plt.figure()
-    #Remove the visibility of axes
-    cur_axes = plt.gca()
-    cur_axes.axes.get_xaxis().set_visible(False)
-    cur_axes.axes.get_yaxis().set_visible(False)
-    fig1 = plt.gcf()
-    fig1.patch.set_visible(False)       #Remove the visibility of frame in the graph
-    print(i)
-    if Y_test[i:i+Sample_size,0].sum() >=0:
-        my_file = 'UpGraph'+str(UpImageNo)+'.png'
-        plt.plot(array,X_test[i:i+Sample_size,0])
-        plt.plot(array,X_test[i:i+Sample_size,3])
-        fig1.savefig(os.path.join(my_path,'Dataset/Test/Up/'+my_file), transparent= True)
-        UpImageNo = UpImageNo+1
-    else:
-        my_file = 'DownGraph'+str(DownImageNo)+'.png'
-        plt.plot(array,X_test[i:i+Sample_size,0])
-        plt.plot(array,X_test[i:i+Sample_size,3])
-        fig1.savefig(os.path.join(my_path, 'Dataset/Test/Down/'+my_file), transparent= True)
-        DownImageNo = DownImageNo+1
-    i=i+Sample_size
+for Sample_size in Samplesize:
+    array = np.arange(Sample_size)
+    i=0
+    while (2*Sample_size)+i <= len(Y_test[:,0]):
+        plt.figure()
+        #Remove the visibility of axes
+        cur_axes = plt.gca()
+        cur_axes.axes.get_xaxis().set_visible(False)
+        cur_axes.axes.get_yaxis().set_visible(False)
+        fig1 = plt.gcf()
+        fig1.patch.set_visible(False)       #Remove the visibility of frame in the graph
+        print(i)
+        print(Sample_size)
+        if Y_test[i+Sample_size:(2*Sample_size)+i,0].sum() >=0:
+            my_file = 'UpGraph'+str(UpImageNo)+'.png'
+            plt.plot(array,X_test[i:i+Sample_size,0])
+            plt.plot(array,X_test[i:i+Sample_size,3])
+            fig1.savefig(os.path.join(my_path,'Dataset/Test/Up/'+my_file), transparent= True)
+            UpImageNo = UpImageNo+1
+        else:
+            my_file = 'DownGraph'+str(DownImageNo)+'.png'
+            plt.plot(array,X_test[i:i+Sample_size,0])
+            plt.plot(array,X_test[i:i+Sample_size,3])
+            fig1.savefig(os.path.join(my_path, 'Dataset/Test/Down/'+my_file), transparent= True)
+            DownImageNo = DownImageNo+1
+        i=i+Sample_size
 
 
 # ---------------------- CNN ----------------------
@@ -93,10 +98,12 @@ from keras.layers import Convolution2D
 from keras.layers import MaxPooling2D     
 from keras.layers import Flatten          
 from keras.layers import Dense            
+from keras.layers import Dropout
 
 classifier = Sequential()
 classifier.add(Convolution2D(32, 3, 3, input_shape = (64, 64, 3), activation = 'relu'))
 classifier.add(MaxPooling2D(pool_size = (2, 2)))
+classifier.add(Dropout(0.3))
 classifier.add(Flatten())
 classifier.add(Dense(output_dim = 128, activation = 'relu'))
 classifier.add(Dense(output_dim = 1, activation = 'sigmoid'))
@@ -119,6 +126,7 @@ training_set= train_datagen.flow_from_directory(
         target_size=(64, 64),
         batch_size=5,
         class_mode='binary')
+
 
 test_set = test_datagen.flow_from_directory(
         'Dataset/Test',
