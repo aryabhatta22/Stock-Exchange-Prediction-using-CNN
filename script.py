@@ -24,7 +24,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 my_path = os.getcwd()       # Path of current working directory
-Samplesize = [20,30,40,50]
+Samplesize = [20,30,40,50,60,70,80,90]
 
                         # Creating trainig image set
 
@@ -103,7 +103,7 @@ from keras.layers import Dropout
 classifier = Sequential()
 classifier.add(Convolution2D(32, 3, 3, input_shape = (64, 64, 3), activation = 'relu'))
 classifier.add(MaxPooling2D(pool_size = (2, 2)))
-classifier.add(Dropout(0.3))
+classifier.add(Dropout(0.5))
 classifier.add(Flatten())
 classifier.add(Dense(output_dim = 128, activation = 'relu'))
 classifier.add(Dense(output_dim = 1, activation = 'sigmoid'))
@@ -137,6 +137,6 @@ test_set = test_datagen.flow_from_directory(
 classifier.fit_generator(
         training_set,
         steps_per_epoch=197,
-        epochs=10,
+        epochs=25,
         validation_data=test_set,
         validation_steps=49)
