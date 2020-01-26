@@ -107,8 +107,12 @@ from keras.layers import Flatten
 from keras.layers import Dense            
 from keras.layers import Dropout
 
+
 classifier = Sequential()
 classifier.add(Convolution2D(32, 3, 3, input_shape = (64, 64, 3), activation = 'relu'))
+classifier.add(MaxPooling2D(pool_size = (2, 2)))
+classifier.add(Dropout(0.5))
+classifier.add(Convolution2D(32, 3, 3, activation = 'relu'))
 classifier.add(MaxPooling2D(pool_size = (2, 2)))
 classifier.add(Dropout(0.5))
 classifier.add(Flatten())
