@@ -46,14 +46,19 @@ for Sample_size in Samplesize:
         print(Sample_size)
         if Y_train[i+Sample_size:(2*Sample_size)+i,0].sum() >=0:
             my_file = 'UpGraph'+str(UpImageNo)+'.png'
-            plt.plot(array,X_train[i:i+Sample_size,0])
-            plt.plot(array,X_train[i:i+Sample_size,3])
+            plt.plot(array,X_train[i:i+Sample_size,0],array,X_train[i:i+Sample_size,3], color="black")
+            plt.fill_between(array, X_train[i:i+Sample_size,0], X_train[i:i+Sample_size,3], where=X_train[i:i+Sample_size,3] >= X_train[i:i+Sample_size,0], facecolor='green', interpolate=True)
+            plt.fill_between(array, X_train[i:i+Sample_size,0], X_train[i:i+Sample_size,3], where=X_train[i:i+Sample_size,3] <= X_train[i:i+Sample_size,0], facecolor='red', interpolate=True)
+            #plt.plot(array,X_train[i:i+Sample_size,3])
             fig1.savefig(os.path.join(my_path,'Dataset/Training/Up/'+my_file), transparent= True)
             UpImageNo = UpImageNo+1
         else:
             my_file = 'DownGraph'+str(DownImageNo)+'.png'
-            plt.plot(array,X_train[i:i+Sample_size,0])
-            plt.plot(array,X_train[i:i+Sample_size,3])
+            plt.plot(array,X_train[i:i+Sample_size,0],array,X_train[i:i+Sample_size,3], color="black")
+            plt.fill_between(array, X_train[i:i+Sample_size,0], X_train[i:i+Sample_size,3], where=X_train[i:i+Sample_size,3] >= X_train[i:i+Sample_size,0], facecolor='green', interpolate=True)
+            plt.fill_between(array, X_train[i:i+Sample_size,0], X_train[i:i+Sample_size,3], where=X_train[i:i+Sample_size,3] <= X_train[i:i+Sample_size,0], facecolor='red', interpolate=True)
+            #plt.plot(array,X_train[i:i+Sample_size,0])
+            #plt.plot(array,X_train[i:i+Sample_size,3])
             fig1.savefig(os.path.join(my_path, 'Dataset/Training/Down/'+my_file), transparent= True)
             DownImageNo = DownImageNo+1
         i=i+Sample_size
@@ -78,14 +83,16 @@ for Sample_size in Samplesize:
         print(Sample_size)
         if Y_test[i+Sample_size:(2*Sample_size)+i,0].sum() >=0:
             my_file = 'UpGraph'+str(UpImageNo)+'.png'
-            plt.plot(array,X_test[i:i+Sample_size,0])
-            plt.plot(array,X_test[i:i+Sample_size,3])
+            plt.plot(array,X_test[i:i+Sample_size,0],array,X_test[i:i+Sample_size,3], color="black")
+            plt.fill_between(array, X_test[i:i+Sample_size,0], X_test[i:i+Sample_size,3], where=X_test[i:i+Sample_size,3] >= X_test[i:i+Sample_size,0], facecolor='green', interpolate=True)
+            plt.fill_between(array, X_test[i:i+Sample_size,0], X_test[i:i+Sample_size,3], where=X_test[i:i+Sample_size,3] <= X_test[i:i+Sample_size,0], facecolor='red', interpolate=True)
             fig1.savefig(os.path.join(my_path,'Dataset/Test/Up/'+my_file), transparent= True)
             UpImageNo = UpImageNo+1
         else:
             my_file = 'DownGraph'+str(DownImageNo)+'.png'
-            plt.plot(array,X_test[i:i+Sample_size,0])
-            plt.plot(array,X_test[i:i+Sample_size,3])
+            plt.plot(array,X_test[i:i+Sample_size,0],array,X_test[i:i+Sample_size,3], color="black")
+            plt.fill_between(array, X_test[i:i+Sample_size,0], X_test[i:i+Sample_size,3], where=X_test[i:i+Sample_size,3] >= X_test[i:i+Sample_size,0], facecolor='green', interpolate=True)
+            plt.fill_between(array, X_test[i:i+Sample_size,0], X_test[i:i+Sample_size,3], where=X_test[i:i+Sample_size,3] <= X_test[i:i+Sample_size,0], facecolor='red', interpolate=True)
             fig1.savefig(os.path.join(my_path, 'Dataset/Test/Down/'+my_file), transparent= True)
             DownImageNo = DownImageNo+1
         i=i+Sample_size
